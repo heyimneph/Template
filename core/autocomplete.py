@@ -1,9 +1,9 @@
 import os
 import aiosqlite
 import logging
-from discord import app_commands, Interaction
 
-from core.utils import get_db_path
+from discord import app_commands, Interaction
+from config import DB_PATH
 
 # ---------------------------------------------------------------------------------------------------------------------
 # Logging Configuration
@@ -14,7 +14,6 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------------------------------------------------
 # Autocomplete Functions
 # ---------------------------------------------------------------------------------------------------------------------
-
 async def cog_autocomplete(interaction: Interaction, current: str):
     """Suggests Python cog files from the cogs folder."""
     try:
@@ -38,7 +37,7 @@ async def cog_autocomplete(interaction: Interaction, current: str):
 async def table_name_autocomplete(interaction: Interaction, current: str):
     """Suggests table names from the SQLite database."""
     try:
-        async with aiosqlite.connect(get_db_path()) as conn:
+        async with aiosqlite.connect(DB_PATH()) as conn:
             cursor = await conn.execute("SELECT name FROM sqlite_master WHERE type='table'")
             tables = [row[0] for row in await cursor.fetchall()]
 

@@ -4,18 +4,19 @@ import aiosqlite
 import psutil
 import inspect
 
-from discord.ext import commands, tasks
+from discord.ext import commands
 from discord import app_commands
 from discord.ui import View, Button
 from datetime import datetime
 
-from core.utils import log_command_usage, check_permissions, get_embed_colour, DB_PATH, owner_check
-from config import OWNER_ID
+from core.utils import log_command_usage,  get_embed_colour, owner_check
+from config import DB_PATH
 
 # ---------------------------------------------------------------------------------------------------------------------
 # Logging Configuration
 # ---------------------------------------------------------------------------------------------------------------------
 logger = logging.getLogger(__name__)
+
 
 # ---------------------------------------------------------------------------------------------------------------------
 # Help Modals
@@ -61,6 +62,7 @@ class SuggestionModal(discord.ui.Modal):
             await interaction.response.send_message("Your suggestion has been submitted successfully!", ephemeral=True)
         else:
             await interaction.response.send_message("Failed to send suggestion. Support channel not found.", ephemeral=True)
+
 
 # ---------------------------------------------------------------------------------------------------------------------
 # Buttons and Views

@@ -6,24 +6,12 @@ from functools import wraps
 from discord import app_commands
 from discord.ui import View, Button
 
-from config import OWNER_ID
+from config import OWNER_ID, DB_PATH
 
 # ---------------------------------------------------------------------------------------------------------------------
 # Logging Configuration
 # ---------------------------------------------------------------------------------------------------------------------
 logger = logging.getLogger(__name__)
-
-# ---------------------------------------------------------------------------------------------------------------------
-# Database Configuration
-# ---------------------------------------------------------------------------------------------------------------------
-DB_DIR = os.path.join('data', 'databases')
-DB_PATH = os.path.join(DB_DIR, 'template.db')
-os.makedirs(DB_DIR, exist_ok=True)
-
-
-def get_db_path() -> str:
-    """Return the location of the bot's SQLite database."""
-    return DB_PATH
 
 
 # ---------------------------------------------------------------------------------------------------------------------
