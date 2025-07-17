@@ -21,6 +21,27 @@ class AdminCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    @app_commands.command(name="sync_all", description="Owner: Sync all slash commands to all guilds.")
+    @only_owner()
+    async def sync_all(self, interaction: discord.Interaction):
+        if not await owner_check(interaction):
+            await interaction.response.send_message("You do not have permission to use this command.", ephemeral=True)
+            return
+
+        await interaction.response.defer(ephemeral=True)
+        total_commands = 0
+        total_guilds = len(self.bot.guilds)
+
+        for guild in self.bot.guilds:
+            count = await perform_sync(guild=guild)
+            total_commands += count
+
+        await interaction.followup.send(
+            f"Synced commands to {total_guilds} guild(s). Total commands synced: {total_commands}",
+            ephemeral=True
+        )
+
+        await log_command_usage(self.bot, interaction)
     # ---------------------------------------------------------------------------------------------------------------------
     @app_commands.command(description="Owner: Reset a specific table in the database")
     @only_owner()

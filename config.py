@@ -76,19 +76,3 @@ async def perform_sync(guild: discord.abc.Snowflake):
 
 
 
-# ---------------------------------------------------------------------------------------------------------------------
-# Sync All Guilds Command (Owner-only)
-# ---------------------------------------------------------------------------------------------------------------------
-@client.command(name="sync_all")
-@is_owner()
-async def sync_all(ctx: Context):
-    total_commands = 0
-    total_guilds = len(client.guilds)
-
-    for guild in client.guilds:
-        count = await perform_sync(guild=guild)
-        total_commands += count
-
-    await ctx.reply(f"Synced commands to {total_guilds} guild(s). Total commands synced: {total_commands}")
-
-
